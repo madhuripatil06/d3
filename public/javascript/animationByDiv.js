@@ -21,7 +21,10 @@ var draw = function(data){
 
 }
 
+var data = randomNumbers(10);
 var intrval = setInterval(function(){
-	draw(randomNumbers(10));
-}, 800);
+	data.shift();
+	data.push(Math.ceil(Math.random()*100))
+	draw(data);
+}, 500);
 
