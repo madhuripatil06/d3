@@ -6,6 +6,11 @@ var randomNumbers = function(count){
 	return result;
 }
 
+var colorScale = function(d){
+	var d = 230 - d;
+ 	return "rgb("+ d +", "+ d+", "+d+")"; 
+}
+
 var draw = function(data){
 	var container = d3.select(".container");
 	var bars = container.selectAll("div")
@@ -15,7 +20,10 @@ var draw = function(data){
 		.append("div")
 		.style("width", function(d){ return d*10})
 		.classed("bar", true)
-		.text(function(d){ return d})
+		.style("background-color", function(d){ 
+			return colorScale(d)
+		})
+		.text(function(d){ return d});
 
 	bars.exit().remove();
 
