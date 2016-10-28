@@ -6,17 +6,22 @@ var randomNumbers = function(count){
 	return result;
 }
 
-var draw = function(){
+var draw = function(data){
 	var container = d3.select(".container");
-	var data = randomNumbers(10);
+	var bars = container.selectAll("div")
+				.data(data, function(d, i){ return d})
 
-	container.selectAll("div").data(data)
-		.enter()
+	bars.enter()
 		.append("div")
 		.style("width", function(d){ return d*10})
 		.classed("bar", true)
 		.text(function(d){ return d})
+
+	bars.exit().remove();
+
 }
 
+var intrval = setInterval(function(){
+	draw(randomNumbers(10));
+}, 800);
 
-window.onload = draw();
