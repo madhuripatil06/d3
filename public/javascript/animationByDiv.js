@@ -15,8 +15,8 @@ var draw = function(){
 		.append("div")
 		.style("width", function(d){ return d*10})
 		.classed("bar", true)
-		.text(function(d){ return d});
+		.text(function(d){ return d})
 }
 
 
-draw();
+window.onload = draw();
