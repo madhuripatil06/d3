@@ -6,9 +6,7 @@ var draw = function(){
 		.enter()
 		.append("div")
 		.style("width", function(d){ return d*50})
-		.style("height",30)
-		.style("background-color", "blue");
-
+		.classed("bar", true)
 }
 
 
