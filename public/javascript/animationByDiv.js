@@ -18,14 +18,16 @@ var draw = function(data){
 
 	bars.enter()
 		.append("div")
-		.style("width", function(d){ return d*10})
 		.classed("bar", true)
+		.style("width", function(d){ return d*10})
 		.style("background-color", function(d){ 
-			// console.log(colorScale(d))
 			return colorScale(d)
-			// return d3.rgb(0,0,d+155)
 		})
-		.text(function(d){ return d});
+		.text(function(d){return d})
+		.attr("transform", "translate(null)")
+		.transition()
+		.duration(490)
+		.ease(d3.easeLinear)
 
 	bars.exit().remove();
 

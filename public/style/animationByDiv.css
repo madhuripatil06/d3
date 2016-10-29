@@ -5,19 +5,32 @@
 	color : white;
 }
 
-/*.left {
-	width: 49%;
-	height: 200px;
-	position: absolute;
-	border: 1px solid black;
-	float: left;
-	overflow: hidden;
+.rounded_bar{
+	height: 30px;
+	margin: 2px;
+	padding: 5px;
+	text-align: center;	
+	color : white;
+	border-radius: 20px;	
+}
+p{
+	font-size: 20px; 
+	display: inline-block;
 }
 
+button {
+	font-size: 15px; 
+	margin: 15px;
+	height: 30px;
+	width: 100px;
+	border-radius: 10px;
+}
 
-.right {
-	width: 49%;
-	height: 400px;
-	float: right;
-	border: 1px solid black;
-}*/
+.subject {
+	display: inline-block;
+	width: 100px;
+	margin: 5px;
+	text-align: center;	
+	color : white;
+	border-radius: 20px;
+}
