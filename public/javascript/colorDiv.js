@@ -1,4 +1,5 @@
 var color = d3.scaleOrdinal(d3.schemeCategory10);
+var sortingKeys = ["subject", "score", "name"]
 
 var data = [
     { name: 'ramesh', subject: 'maths', score: 87 },
@@ -18,8 +19,11 @@ var data = [
 
 var draw = function(data) {
     var container = d3.select(".container");
-    var bars = container.selectAll("div")
-        .data(data, function(d, i) {return i })
+    container.style("height", 600)
+            .style("width", 700)
+
+    var bars = container.selectAll(".rounded_bar")
+        .data(data, function(d, i) {return i + "  "+ d })
 
     bars.enter()
         .append("div")
@@ -28,32 +32,37 @@ var draw = function(data) {
         .style("background-color", function(d) {return color(d.subject);})
         .text(function(d) {return d.name + "  " + d.score })
 
+    d3.selectAll(".rounded_bar").style("top", function(d, i) {return (i*50) + "px";});
+
     bars.exit().remove();
 }
-
 var drawSubjects = function(data) {
-    var container = d3.select(".container");
-    var subjects = d3.map(data, function(d) {return d.subject; }).keys();
-
+    var container = d3.select(".subjects");
     container.append("p")
         .text("subjects : ");
+    var subjects = d3.map(data, function(d) {return d.subject; }).keys();
+    var container = container.selectAll(".subject").data(subjects)
 
-    container.selectAll(".subject").data(subjects)
-        .enter()
+
+    container.enter()
         .append("div")
         .classed("subject", true)
         .style("height", 30)
         .style("background-color", function(d) {return color(d)})
-        .text(function(d) {return d});
+        .text(function(d) {return d})
 }
 
 
 var sortByKey = function(key) {
-	d3.selectAll(".rounded_bar")
-		.sort(function(a,b){
-			return d3.ascending(a[key], b[key]);
-		});
-}
+    d3.selectAll(".rounded_bar")
+        .sort(function(a, b) {
+            return d3.ascending(a[key], b[key]);
+        })
+        .transition().duration(500)
+        .style("top", function(d, i) {
+            return (i*50) + "px";
+        });
+};
 
 var sortBySubject = function() {
     sortByKey("subject");
@@ -66,6 +75,9 @@ var sortByName = function() {
 var sortByScore = function() {
     sortByKey("score");
 }
-
+var x = function () {
 draw(data);
 drawSubjects(data);
+    
+};
+x();

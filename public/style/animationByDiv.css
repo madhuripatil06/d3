@@ -1,11 +1,5 @@
-.bar {
-	height: 30px;
-	margin: 2px;
-	text-align: right;	
-	color : white;
-}
-
 .rounded_bar{
+	position: absolute;
 	height: 30px;
 	margin: 2px;
 	padding: 5px;
@@ -13,7 +7,7 @@
 	color : white;
 	border-radius: 20px;	
 }
-p{
+p {
 	font-size: 20px; 
 	display: inline-block;
 }
@@ -27,6 +21,7 @@ button {
 }
 
 .subject {
+	position: relative;
 	display: inline-block;
 	width: 100px;
 	margin: 5px;
