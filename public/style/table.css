@@ -1,8 +1,13 @@
 table{
 	font-size: 10px;
-	border: "1";
 }
 
+
 td, th{
-	border: 1px solid black;
+	border: solid 1px;
+	text-align: center;
+}
+
+table {
+    border-collapse: collapse;
 }
