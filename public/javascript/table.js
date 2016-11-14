@@ -3,23 +3,23 @@ var roundLog = function(input){
 	return d3.format(".2f")(d3.scaleLog()(input));
 };
 
-var appendNewRow = function(name, scale){
+var appendNewRow = function(name, scale, type){
 	var row = d3.select(".myTable").append("tr");
 	row.append("th").text(name);
 	row.selectAll("td").data(numbers)
 		.enter()
-		.append("td")
+		.append(type)
 		.text(function(d){ return scale(d)});	
 };
 
 var load = function(){
 	var table = d3.select(".container").append("table")
 		.classed("myTable",true);
-	appendNewRow("header", d3.scaleIdentity());
-	appendNewRow("value", d3.scaleIdentity());
-	appendNewRow("square", d3.scalePow().exponent(2));
-	appendNewRow("log", roundLog);
-	appendNewRow("log", d3.scaleLog().rangeRound([0,1]));
+	appendNewRow("header", d3.scaleIdentity(), "th");
+	appendNewRow("value", d3.scaleIdentity(), "td");
+	appendNewRow("square", d3.scalePow().exponent(2), "td");
+	appendNewRow("log", roundLog, "td");
+	appendNewRow("log", d3.scaleLog().rangeRound([0,1]), "td");
 };
 
 window.onload = load;
