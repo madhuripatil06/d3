@@ -1,9 +1,12 @@
 var numbers = [1,2,3,4,5,6,7,8,9,10];
+var roundLog = function(input){
+	return d3.format(".2f")(d3.scaleLog()(input));
+};
 
 var appendNewRow = function(name, scale){
-	var tr = d3.select(".myTable").append("tr");
-	tr.append("th").text(name);
-	tr.selectAll("td").data(numbers)
+	var row = d3.select(".myTable").append("tr");
+	row.append("th").text(name);
+	row.selectAll("td").data(numbers)
 		.enter()
 		.append("td")
 		.text(function(d){ return scale(d)});	
@@ -15,8 +18,8 @@ var load = function(){
 	appendNewRow("header", d3.scaleIdentity());
 	appendNewRow("value", d3.scaleIdentity());
 	appendNewRow("square", d3.scalePow().exponent(2));
-	appendNewRow("log", d3.scaleLog());
-	appendNewRow("log", d3.scaleLog());
+	appendNewRow("log", roundLog);
+	appendNewRow("log", d3.scaleLog().rangeRound([0,1]));
 };
 
 window.onload = load;
