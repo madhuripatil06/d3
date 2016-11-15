@@ -1,9 +1,9 @@
 .shape {
-	stroke: black;	
 	stroke-width: 1;
 	fill: none;	
 }
 
 svg {
-	padding: 5px;
+	border: solid 1px;
+	border-radius: 10px;
 }
