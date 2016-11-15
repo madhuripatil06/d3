@@ -51,6 +51,7 @@ var transition = function(){
 		.duration(2000)
 		.attr("transform", function(d, i){ return translate((i*(SHAPE_SIZE+MARGIN)), 0)});
 };
+
 var operations = [drawLine, drawRect, drawCircle, drawTriangle];
 
 var load = function(){
