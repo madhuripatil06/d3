@@ -19,7 +19,7 @@ var load = function(){
 	appendNewRow("value", d3.scaleIdentity(), "td");
 	appendNewRow("square", d3.scalePow().exponent(2), "td");
 	appendNewRow("log", roundLog, "td");
-	appendNewRow("log", d3.scaleLog().rangeRound([0,1]), "td");
+	appendNewRow("log", d3.scaleLog().interpolate(d3.interpolateRound), "td");
 };
 
 window.onload = load;
