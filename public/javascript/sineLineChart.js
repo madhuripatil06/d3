@@ -1,32 +1,84 @@
-const WIDTH = 1000;
-const HEIGHT = 1000;
+const WIDTH = 600;
+const HEIGHT = 400;
+const MARGIN = 40;
+const SHIFT = 0.5;
+const INNERWIDTH = WIDTH - (2*MARGIN);
+const INNERHEIGHT = HEIGHT- (2*MARGIN);
+
+var translate = function(x,y){
+	return "translate(" + x + ", " + y + ")";
+};
+
+var transition = function(element, xMargin, yMargin){
+	element.transition()
+		.duration(1000)
+		.attr('transform', translate(xMargin, yMargin));
+}
 
 var load = function(){
 	var data = [[0,5], [1,9], [2,7], [3,5], [4,3], [6,4], [7,2], [8,3], [9,2]];
-	var scale = d3.scaleLinear()
-		.domain([0,10])
-		.range([10,110]);
+	var xScale = d3.scaleLinear()
+		.domain([0,1])
+		.range([0,INNERWIDTH]);
+
+	var yScale = d3.scaleLinear()
+		.domain([0,1])
+		.range([INNERHEIGHT, 0]);
+
+	var xAxis = d3.axisBottom(xScale).ticks(10)
+	var yAxis = d3.axisLeft(yScale).ticks(10)
 
 	var line = d3.line()
-		.x(function(d){ return scale(d[0])})
-		.y(function(d){ return 110 - scale(d[1])})
+		.x(function(d){ return xScale(d[0]/10)})
+		.y(function(d){ return yScale(d[1]/10)})
 
-
+	
 	var svg = d3.select(".container").append("svg")
 		.attr("height", HEIGHT)
-		.attr("width", WIDTH);
+		.attr("width", WIDTH)
 
-	svg.selectAll("circle").data(data)
+	var normalLine = svg.append("g");
+
+	normalLine.selectAll("circle").data(data)
 		.enter()
 		.append("circle")
 		.attr("r", 2)
-		.attr("cx", function(d){ return scale(d[0])})
-		.attr("cy", function(d){ return 110 - scale(d[1])})
+		.attr("cx", function(d){ return xScale(d[0]/10)})
+		.attr("cy", function(d){ return yScale(d[1]/10)})
 
-	svg.append("path")
+	normalLine.append("path")
 		.attr("d", line(data))
-		.style("fill", "none")
-		.style("stroke", "black")
+		.classed("line", true)
+	
+	var sinLine = svg.append("g");
+	
+	sinLine.selectAll("circle").data(data)
+		.enter()
+		.append("circle")
+		.attr("r", 2)
+		.attr("cx", function(d){ return xScale(d[0]/10)})
+		.attr("cy", function(d){ return yScale((Math.sin(d[0])/10) + SHIFT)})
+
+	var sine = d3.line()
+		.x(function(d){ return xScale(d[0]/10)})
+		.y(function(d){ return yScale((Math.sin(d[0])/10) + SHIFT)})
+
+	sinLine.append("path")
+		.attr("d", sine(data))
+		.classed("line", true)
+
+	var xAxisGroup = svg.append("g")
+		.call(xAxis)
+
+	var yAxisGroup = svg.append("g")
+		.call(yAxis);
+
+	transition(normalLine, MARGIN, MARGIN);
+	transition(sinLine, MARGIN, MARGIN);
+	transition(xAxisGroup, MARGIN, INNERHEIGHT + MARGIN);
+	transition(yAxisGroup, MARGIN, MARGIN);
 };
+
+
 
 window.onload = load;
