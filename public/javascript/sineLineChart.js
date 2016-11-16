@@ -21,8 +21,8 @@ var drawCircles = function(selection, data, xScale, yScale, sine){
 		.append("circle")
 		.classed("circle", true)
 		.attr("r", 2)
-		.attr("cx", function(d){ return xScale(d[0]/10)})
-		.attr("cy", function(d){ if(sine){return yScale((sine(d[0])/10) + SHIFT); }return yScale(d[1]/10)})
+		.attr("cx", function(d){ return xScale(d[0])})
+		.attr("cy", function(d){ if(sine){return yScale((sine(d[0])) + SHIFT*10); }return yScale(d[1])})
 };
 
 var appendPath = function(selection, data, line){
@@ -35,23 +35,23 @@ var load = function(){
 	var data = [[0,5], [1,9], [2,7], [3,5], [4,3], [6,4], [7,2], [8,3], [9,2]];
 	
 	var line = d3.line()
-			.x(function(d){ return xScale(d[0]/10)})
-			.y(function(d){ return yScale(d[1]/10)})
+			.x(function(d){ return xScale(d[0])})
+			.y(function(d){ return yScale(d[1])})
 
 	var sine = d3.line()
-			.x(function(d){ return xScale(d[0]/10)})
-			.y(function(d){ return yScale((Math.sin(d[0])/10) + SHIFT)})
+			.x(function(d){ return xScale(d[0])})
+			.y(function(d){ return yScale((Math.sin(d[0])) + SHIFT*10)})
 		
 	var xScale = d3.scaleLinear()
-		.domain([0,1])
+		.domain([0,10])
 		.range([0,INNERWIDTH]);
 
 	var yScale = d3.scaleLinear()
-		.domain([0,1])
+		.domain([0,10])
 		.range([INNERHEIGHT, 0]);
 
-	var xAxis = d3.axisBottom(xScale).ticks(10)
-	var yAxis = d3.axisLeft(yScale).ticks(10)
+	var xAxis = d3.axisBottom(xScale).ticks(10).tickFormat(function(d){ return d/10;})
+	var yAxis = d3.axisLeft(yScale).ticks(10).tickFormat(function(d){ return d/10;})
 	
 	var svg = d3.select(".container").append("svg")
 		.attr("height", HEIGHT)
