@@ -39,33 +39,37 @@ var load = function(){
 
 	var normalLine = svg.append("g");
 
-	normalLine.selectAll("circle").data(data)
-		.enter()
-		.append("circle")
-		.attr("r", 2)
-		.attr("cx", function(d){ return xScale(d[0]/10)})
-		.attr("cy", function(d){ return yScale(d[1]/10)})
-
 	normalLine.append("path")
 		.attr("d", line(data))
 		.classed("line", true)
 	
+	normalLine.selectAll("circle").data(data)
+		.enter()
+		.append("circle")
+		.classed("circle", true)
+		.attr("r", 2)
+		.attr("cx", function(d){ return xScale(d[0]/10)})
+		.attr("cy", function(d){ return yScale(d[1]/10)})
+
 	var sinLine = svg.append("g");
 	
+	var sine = d3.line()
+		.x(function(d){ return xScale(d[0]/10)})
+		.y(function(d){ return yScale((Math.sin(d[0])/10) + SHIFT)})
+	
+	sinLine.append("path")
+		.attr("d", sine(data))
+		.classed("line", true)
+
 	sinLine.selectAll("circle").data(data)
 		.enter()
 		.append("circle")
+		.classed("circle", true)
 		.attr("r", 2)
 		.attr("cx", function(d){ return xScale(d[0]/10)})
 		.attr("cy", function(d){ return yScale((Math.sin(d[0])/10) + SHIFT)})
 
-	var sine = d3.line()
-		.x(function(d){ return xScale(d[0]/10)})
-		.y(function(d){ return yScale((Math.sin(d[0])/10) + SHIFT)})
 
-	sinLine.append("path")
-		.attr("d", sine(data))
-		.classed("line", true)
 
 	var xAxisGroup = svg.append("g")
 		.call(xAxis)
