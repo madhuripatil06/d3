@@ -87,4 +87,3 @@ var load = function(curve){
 	transition(yAxisGroup, MARGIN, MARGIN);
 };
 
-//window.onload = load;

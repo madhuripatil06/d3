@@ -4,12 +4,10 @@ const MARGIN = 40;
 const SHIFT = 0.5;
 const INNERWIDTH = WIDTH - (2*MARGIN);
 const INNERHEIGHT = HEIGHT- (2*MARGIN);
-
 const OUTERRADIUS = 200;
 
 
-
-var load = function(){
+var load = function(endangle){
 	var data = [1, 1, 2, 2, 1, 2, 1];
 	var arcs = d3.pie()(data.map(function(d) { return d; }));
 
@@ -20,12 +18,17 @@ var load = function(){
     var color = d3.scaleOrdinal(d3.schemeCategory20);
 
     var arc = d3.arc()
+        .innerRadius(0)
         .outerRadius(OUTERRADIUS)
-        .innerRadius(0);
 
     var pie = d3.pie()
         .sort(null)
         .value(function(d) { return d; });
+
+    if(endangle){
+        pie.startAngle(0)
+           .endAngle(endangle)
+    }
 
     var g = svg.selectAll(".arc")
       .data(pie(data))
@@ -36,8 +39,6 @@ var load = function(){
       .attr("d", arc)
       .style("fill", function(d, i) { return color(i); });
 
-    svg.selectAll(".arc")
-      .attr("transform", "translate("+ OUTERRADIUS+", "+OUTERRADIUS+")");
+    svg.selectAll("g")
+      .attr("transform", "translate("+ (OUTERRADIUS+MARGIN)+", "+(OUTERRADIUS+MARGIN)+")");
 };
-
-window.onload = load;
