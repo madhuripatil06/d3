@@ -20,7 +20,7 @@ var drawCircles = function(selection, data, xScale, yScale){
 		.enter()
 		.append("circle")
 		.classed("circle", true)
-		.attr("r", 2)
+		.attr("r", 3)
 		.attr("cx", function(d){ return xScale(d/10)})
 		.attr("cy", function(d){ return yScale((Math.sin(3*d)+1)/2)})
 };
@@ -33,10 +33,11 @@ var appendPath = function(selection, data, line){
 		.classed("line", true);
 };
 
-var load = function(){
+var load = function(curve){
 	var data = [0,1,2,3,4,5,6,7,8,9];
 	
 	var line = d3.line()
+	        .curve(curve)
 			.x(function(d){ return xScale(d/10)})
 			.y(function(d){ return yScale((Math.sin(3*d)+1)/2)});
 
@@ -73,4 +74,3 @@ var load = function(){
 	transition(yAxisGroup, MARGIN, MARGIN);
 };
 
-window.onload  =load;
