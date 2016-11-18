@@ -39,17 +39,19 @@ var appendArea = function(selection, data, area){
 		.attr("fill", "lightsteelblue")
 };
 
-var load = function(){
+var load = function(curve){
 	var data = [0,1,2,3,4,5,6,7,8,9,10];
 
 	var line = d3.line()
+	        .curve(curve)
 			.x(function(d){ return xScale(d)})
 			.y(function(d){ return yScale(3*Math.sin(d)+5)});
 
 	var area = d3.area()
+	    .curve(curve)
         .x(function(d) { return xScale(d); })
+        .y1(function(d) { return yScale(3*Math.sin(d)+5); })
         .y0(INNERHEIGHT)
-        .y1(function(d) { return yScale(3*Math.sin(d)+5); });
 
 	var xScale = d3.scaleLinear()
 		.domain([0,10])
@@ -85,4 +87,4 @@ var load = function(){
 	transition(yAxisGroup, MARGIN, MARGIN);
 };
 
-window.onload = load;
+//window.onload = load;
