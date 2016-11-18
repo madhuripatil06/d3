@@ -7,7 +7,7 @@ const INNERHEIGHT = HEIGHT- (2*MARGIN);
 const OUTERRADIUS = 200;
 
 
-var load = function(endangle){
+var load = function(endangle, innerradius){
 	var data = [1, 1, 2, 2, 1, 2, 1];
 	var arcs = d3.pie()(data.map(function(d) { return d; }));
 
@@ -18,7 +18,7 @@ var load = function(endangle){
     var color = d3.scaleOrdinal(d3.schemeCategory20);
 
     var arc = d3.arc()
-        .innerRadius(0)
+        .innerRadius(innerradius)
         .outerRadius(OUTERRADIUS)
 
     var pie = d3.pie()
