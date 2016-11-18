@@ -31,14 +31,16 @@ var appendPath = function(selection, data, line){
 		.classed("line", true);
 };
 
-var load = function(){
+var load = function(curve){
 	var data = [[0,5], [1,9], [2,7], [3,5], [4,3], [6,4], [7,2], [8,3], [9,2]];
 	
 	var line = d3.line()
+	        .curve(curve)
 			.x(function(d){ return xScale(d[0])})
 			.y(function(d){ return yScale(d[1])})
 
 	var sine = d3.line()
+	        .curve(curve)
 			.x(function(d){ return xScale(d[0])})
 			.y(function(d){ return yScale((Math.sin(d[0])) + SHIFT*10)})
 		
@@ -80,7 +82,3 @@ var load = function(){
 	transition(xAxisGroup, MARGIN, INNERHEIGHT + MARGIN);
 	transition(yAxisGroup, MARGIN, MARGIN);
 };
-
-
-
-window.onload = load;
