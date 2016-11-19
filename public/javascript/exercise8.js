@@ -21,8 +21,8 @@ var drawCircles = function(selection, data, xScale, yScale, sine){
 		.append("circle")
 		.classed("circle", true)
 		.attr("r", 2)
-		.attr("cx", function(d){ return xScale(d[0])})
-		.attr("cy", function(d){ if(sine){return yScale((sine(d[0])) + SHIFT*10); }return yScale(d[1])})
+		.attr("cx", function(d){ return xScale(d.x)})
+		.attr("cy", function(d,i){ if(sine){return yScale((sine(i)) + SHIFT*10); }return yScale(d.y)})
 };
 
 var appendPath = function(selection, data, line){
@@ -32,17 +32,18 @@ var appendPath = function(selection, data, line){
 };
 
 var load = function(curve){
-	var data = [[0,5], [1,9], [2,7], [3,5], [4,3], [6,4], [7,2], [8,3], [9,2]];
-	
+	var data = [{x:0,y:5}, {x:1,y:9}, {x:2,y:7}, {x:3,y:5}, {x:4,y:3},
+	            {x:6,y:4}, {x:7,y:2}, {x:8,y:3}, {x:9,y:2}];
+
 	var line = d3.line()
 	        .curve(curve)
-			.x(function(d){ return xScale(d[0])})
-			.y(function(d){ return yScale(d[1])})
+			.x(function(d){ return xScale(d.x)})
+			.y(function(d){ return yScale(d.y)})
 
 	var sine = d3.line()
 	        .curve(curve)
-			.x(function(d){ return xScale(d[0])})
-			.y(function(d){ return yScale((Math.sin(d[0])) + SHIFT*10)})
+			.x(function(d){ return xScale(d.x)})
+			.y(function(d,i){ return yScale((Math.sin(i)) + SHIFT*10)})
 		
 	var xScale = d3.scaleLinear()
 		.domain([0,10])
